@@ -3,17 +3,27 @@
 import React from "react";
 import { Bell, Menu, Settings, Sun } from "lucide-react";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/app/redux";
+import { setIsSidebarCollapsed } from "@/state";
 
 const Navbar = () => {
+      const currentYear = new Date().getFullYear()
+      const dispatch = useAppDispatch();
+      const isSidebarCollapsed = useAppSelector((state) => state.global.isSidebarCollapsed);
+  
+      const toggleSidebar = () => {
+          dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
+      }
   return (
     <div className="flex justify-between items-center w-full mb-7">
       Navbar
       {/* left side */}
       <div className="flex justify-between items-center gap-5">
         {" "}
+        {/* for the destop device the toggle button of the sidebar shown in the navbar */}
         <button
           className="px-3 py-3 bg-gray-100 rounded-full hover:bg-blue-100"
-          onClick={() => {}}
+          onClick={toggleSidebar}
         >
           <Menu className="w-4 h-4" />
         </button>
