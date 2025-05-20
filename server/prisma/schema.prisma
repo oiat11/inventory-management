@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -15,13 +14,13 @@ datasource db {
 }
 
 model Users {
-  userId String @id @default(cuid())
+  userId String @id
   name   String
-  email  String @unique
+  email  String
 }
 
 model Products {
-  productId     String      @id @default(cuid())
+  productId     String      @id
   name          String
   price         Float
   rating        Float?
@@ -31,9 +30,9 @@ model Products {
 }
 
 model Sales {
-  saleId      String   @id @default(cuid())
+  saleId      String   @id
   productId   String
-  timestamp   DateTime @default(now())
+  timestamp   DateTime
   quantity    Int
   unitPrice   Float
   totalAmount Float
@@ -41,9 +40,9 @@ model Sales {
 }
 
 model Purchases {
-  purchaseId String   @id @default(cuid())
+  purchaseId String   @id
   productId  String
-  timestamp  DateTime @default(now())
+  timestamp  DateTime
   quantity   Int
   unitCost   Float
   totalCost  Float
@@ -51,38 +50,38 @@ model Purchases {
 }
 
 model Expenses {
-  expenseId String   @id @default(cuid())
+  expenseId String   @id
   category  String
   amount    Float
-  timestamp DateTime @default(now())
+  timestamp DateTime
 }
 
 model SalesSummary {
-  salesSummaryId   String   @id @default(cuid())
+  salesSummaryId   String   @id
   totalValue       Float
   changePercentage Float?
-  date             DateTime @default(now())
+  date             DateTime
 }
 
-model PurchasesSummary {
-  purchasesSummaryId String   @id @default(cuid())
-  totalPurchansed    Float
-  changePercentage   Float?
-  date               DateTime @default(now())
+model PurchaseSummary {
+  purchaseSummaryId String   @id
+  totalPurchased    Float
+  changePercentage  Float?
+  date              DateTime
 }
 
-model ExpensesSummary {
-  expensesSummaryId String              @id @default(cuid())
+model ExpenseSummary {
+  expenseSummaryId  String              @id
   totalExpenses     Float
-  date              DateTime            @default(now())
+  date              DateTime
   ExpenseByCategory ExpenseByCategory[]
 }
 
 model ExpenseByCategory {
-  expenseByCategoryId String          @id @default(cuid())
-  expensesSummaryId   String
+  expenseByCategoryId String         @id
+  expenseSummaryId    String
   category            String
   amount              BigInt
-  date                DateTime        @default(now())
-  expensesSummary     ExpensesSummary @relation(fields: [expensesSummaryId], references: [expensesSummaryId])
+  date                DateTime
+  expenseSummary      ExpenseSummary @relation(fields: [expenseSummaryId], references: [expenseSummaryId])
 }
